@@ -1,6 +1,7 @@
 package coffee.shop.config;
 
 import coffee.shop.controller.UserController;
+import coffee.shop.dao.SessionDAO;
 import coffee.shop.dao.UserDAO;
 import coffee.shop.service.user.UserService;
 
@@ -9,7 +10,7 @@ public class AppConfig {
 
     // DAO
     private final UserDAO userDAO;
-
+    private final SessionDAO sessionDAO;
     // SERVICE
     private final UserService userService;
 
@@ -20,9 +21,10 @@ public class AppConfig {
     private AppConfig(){
         // dao
         this.userDAO = new UserDAO();
+        this.sessionDAO = new SessionDAO();
 
         // service
-        this.userService = new UserService(userDAO);
+        this.userService = new UserService(userDAO, sessionDAO);
 
         // controller
         this.userController = new UserController(userService);

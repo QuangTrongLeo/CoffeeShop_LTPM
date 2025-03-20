@@ -17,5 +17,12 @@ public class UserController {
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
+
+    public User login(String username, String password) {
+        return userService.checkLogin(username, password);
+    }
+    public void logout(int userId) {
+        userService.logout(userId);
+    }
 }
 

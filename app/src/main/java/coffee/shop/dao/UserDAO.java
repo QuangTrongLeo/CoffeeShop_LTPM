@@ -49,15 +49,46 @@ public class UserDAO {
             e.printStackTrace();
         } finally {
             // Đảm bảo đóng các tài nguyên
-            try {
-                if (rs != null) rs.close();
-                if (pr != null) pr.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            closeResources();
         }
 
         return users;
+    }
+
+    public User checkLogin(String username, String password) {
+        User user = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            String sql = "SELECT * FROM user WHERE username = ? AND password = ?";
+            pr = conn.prepareStatement(sql);
+            pr.setString(1, username);
+            pr.setString(2, password);
+            rs = pr.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                int salary = rs.getInt("salary");
+                Timestamp startDate = rs.getTimestamp("startDate");
+                String phoneNumber = rs.getString("phoneNumber");
+                String fullname = rs.getString("fullname");
+                int roleId = rs.getInt("role_id");
+
+                user = new User(id, salary, startDate, phoneNumber, fullname, password, username, roleId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
+        return user;
+    }
+    private void closeResources() {
+        try {
+            if (rs != null) rs.close();
+            if (pr != null) pr.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
