@@ -1,6 +1,7 @@
 package coffee.shop.ui.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import coffee.shop.R;
+import coffee.shop.model.CoffeeTable;
 
 public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHolder> {
     private Context context;
-    private List<String> tableList;
+    private List<CoffeeTable> tableList;
 
-    public TableAdapter(Context context, List<String> tableList) {
+    public TableAdapter(Context context, List<CoffeeTable> tableList) {
         this.context = context;
         this.tableList = tableList;
     }
@@ -29,7 +31,15 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
 
     @Override
     public void onBindViewHolder(@NonNull TableViewHolder holder, int position) {
-        holder.buttonTable.setText("BÀN " + (position + 1));
+        CoffeeTable table = tableList.get(position);
+        holder.buttonTable.setText(table.getName());
+        Log.d("TableAdapter", "Table " + table.getName() + " - Status: " + table.getStatus());
+
+        if ("blank".equals(table.getStatus())) {
+            holder.buttonTable.setBackgroundResource(R.drawable.button_background_white);
+        } else if ("used".equals(table.getStatus())) {
+            holder.buttonTable.setBackgroundResource(R.drawable.button_background_blue);
+        }
     }
 
     @Override

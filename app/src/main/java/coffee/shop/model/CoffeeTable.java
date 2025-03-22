@@ -5,6 +5,15 @@ public class CoffeeTable {
     private String name;
     private String status;
 
+    @Override
+    public String toString() {
+        return "CoffeeTable{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
+
     // Constructors, getters, setters
     public CoffeeTable() {}
 

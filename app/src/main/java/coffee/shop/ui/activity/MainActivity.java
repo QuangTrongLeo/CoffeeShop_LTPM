@@ -16,8 +16,6 @@ import java.util.concurrent.Executors;
 import coffee.shop.R;
 import coffee.shop.config.AppConfig;
 import coffee.shop.controller.UserController;
-import coffee.shop.dao.UserDAO;
-import coffee.shop.service.user.UserService;
 import coffee.shop.model.User;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,16 +29,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         userController = AppConfig.getInstance().provideUserController();
+
         // Chạy trên luồng phụ để tránh lag UI
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
-            List<User> users = userController.getAllUsers();
-            for (User user : users) {
-                Log.d(TAG, "User: " + user.toString());
+            try {
+                List<User> users = userController.getAllUsers();
+
+                for (User user : users) {
+                    Log.d(TAG, "User: " + user.toString());
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Lỗi khi truy xuất database", e);
             }
         });
         executor.shutdown();
 
+        // Xử lý layout để không che UI khi có bàn phím
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
