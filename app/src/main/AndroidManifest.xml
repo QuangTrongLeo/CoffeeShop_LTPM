@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
         android:allowBackup="true"
@@ -14,13 +14,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Shop"
-
         tools:targetApi="31">
         <activity
             android:name=".ui.activity.MainActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.activity.TableBlankActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.TableUsedActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

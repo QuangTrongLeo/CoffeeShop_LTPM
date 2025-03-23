@@ -22,18 +22,17 @@ import coffee.shop.controller.TableController;
 import coffee.shop.model.CoffeeTable;
 import coffee.shop.ui.adapter.TableAdapter;
 
-public class HomeActivity extends AppCompatActivity {
-    private static final String TAG = "HomeTest";
+public class TableBlankActivity extends AppCompatActivity {
+    private static final String TAG = "TableBlank";
     private RecyclerView recyclerViewTables;
     private TableAdapter tableAdapter;
     private TableController tableController;
-    private List<CoffeeTable> tables = new ArrayList<>(); // ✅ Khởi tạo danh sách trống
-
+    private List<CoffeeTable> tables = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_table_blank);
 
         recyclerViewTables = findViewById(R.id.recyclerViewTables);
         recyclerViewTables.setLayoutManager(new GridLayoutManager(this, 4));
@@ -41,11 +40,10 @@ public class HomeActivity extends AppCompatActivity {
 
         tableController = AppConfig.getInstance().provideTableController();
 
-        // ✅ Khởi tạo adapter với danh sách trống trước
         tableAdapter = new TableAdapter(this, tables);
         recyclerViewTables.setAdapter(tableAdapter);
 
-        loadTables();
+        loadTablesBlank();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -54,11 +52,11 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void loadTables() {
+    private void loadTablesBlank() {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             try {
-                List<CoffeeTable> fetchedTables = tableController.getAllCoffeeTables();
+                List<CoffeeTable> fetchedTables = tableController.getAllBlankTables();
 
                 if (fetchedTables != null) {
                     tables.clear();
