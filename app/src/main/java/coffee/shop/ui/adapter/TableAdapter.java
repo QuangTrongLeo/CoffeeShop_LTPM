@@ -1,12 +1,14 @@
 package coffee.shop.ui.adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
@@ -35,10 +37,15 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
         holder.buttonTable.setText(table.getName());
         Log.d("TableAdapter", "Table " + table.getName() + " - Status: " + table.getStatus());
 
+        int whiteColor = ContextCompat.getColor(context, R.color.white);
+        int darkBlueColor = ContextCompat.getColor(context, R.color.dark_blue);
+
         if ("blank".equals(table.getStatus())) {
-            holder.buttonTable.setBackgroundResource(R.drawable.button_background_white);
+            holder.buttonTable.setBackgroundTintList(ColorStateList.valueOf(whiteColor)); // Màu trắng
+            holder.buttonTable.setTextColor(darkBlueColor); // Chữ màu xanh đậm
         } else if ("used".equals(table.getStatus())) {
-            holder.buttonTable.setBackgroundResource(R.drawable.button_background_blue);
+            holder.buttonTable.setBackgroundTintList(ColorStateList.valueOf(darkBlueColor)); // Màu xanh đậm
+            holder.buttonTable.setTextColor(whiteColor); // Chữ màu trắng
         }
     }
 
