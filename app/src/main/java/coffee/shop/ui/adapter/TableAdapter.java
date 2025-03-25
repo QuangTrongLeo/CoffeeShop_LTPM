@@ -2,6 +2,7 @@ package coffee.shop.ui.adapter;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,15 +39,20 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
         Log.d("TableAdapter", "Table " + table.getName() + " - Status: " + table.getStatus());
 
         int whiteColor = ContextCompat.getColor(context, R.color.white);
+        int grayColor = ContextCompat.getColor(context, R.color.gray);
+        int lightBlueColor = ContextCompat.getColor(context, R.color.light_blue);
         int darkBlueColor = ContextCompat.getColor(context, R.color.dark_blue);
 
+        GradientDrawable drawable = (GradientDrawable) holder.buttonTable.getBackground().mutate();
+
         if ("blank".equals(table.getStatus())) {
-            holder.buttonTable.setBackgroundTintList(ColorStateList.valueOf(whiteColor)); // Màu trắng
-            holder.buttonTable.setTextColor(darkBlueColor); // Chữ màu xanh đậm
+            holder.buttonTable.setBackgroundTintList(ColorStateList.valueOf(whiteColor));
+            holder.buttonTable.setTextColor(grayColor);
         } else if ("used".equals(table.getStatus())) {
-            holder.buttonTable.setBackgroundTintList(ColorStateList.valueOf(darkBlueColor)); // Màu xanh đậm
-            holder.buttonTable.setTextColor(whiteColor); // Chữ màu trắng
+            holder.buttonTable.setBackgroundTintList(ColorStateList.valueOf(lightBlueColor)); // Màu xanh đậm
+            holder.buttonTable.setTextColor(darkBlueColor);
         }
+        holder.buttonTable.setBackground(drawable);
     }
 
     @Override
