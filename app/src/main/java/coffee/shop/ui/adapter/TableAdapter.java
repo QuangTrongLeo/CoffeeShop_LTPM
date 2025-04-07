@@ -1,6 +1,7 @@
 package coffee.shop.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import coffee.shop.R;
 import coffee.shop.model.CoffeeTable;
+import coffee.shop.ui.activity.OrderActivity;
 
 public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHolder> {
     private Context context;
@@ -53,6 +55,14 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
             holder.buttonTable.setTextColor(darkBlueColor);
         }
         holder.buttonTable.setBackground(drawable);
+
+        // Thêm sự kiện nhấn vào bàn để mở OrderActivity
+        holder.buttonTable.setOnClickListener(v -> {
+            // Tạo Intent để chuyển đến OrderActivity
+            Intent intent = new Intent(context, OrderActivity.class);
+            intent.putExtra("tableId", table.getId());  // Truyền tableId của bàn
+            context.startActivity(intent);  // Mở OrderActivity
+        });
     }
 
     @Override
